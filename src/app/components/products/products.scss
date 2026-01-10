@@ -1,0 +1,50 @@
+.products-cards {
+  padding: 16px;
+}
+.subtitle {
+  color: rgba(0, 0, 0, 0.6);
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 12px;
+}
+.product-card {
+  padding: 8px;
+}
+.product-card mat-card-actions button {
+  margin-right: 8px;
+}
+.example-card {
+  max-width: 400px;
+}
+.example-header-image {
+  background-size: cover;
+  background-position: center;
+}
+
+.example-card {
+  background-color: var(--secondary-color) !important;
+}
+
+.example-card mat-card-title {
+  color: var(--main-color) !important;
+  font-weight: bold;
+}
+
+.title {
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.example-card mat-card-actions button {
+  color: var(--secondary-color) !important;
+  background-color: var(--main-color) !important;
+}
+
+.example-card mat-card-actions button mat-icon {
+  color: var(--main-color) !important;
+  fill: var(--main-color) !important;
+}

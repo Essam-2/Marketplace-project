@@ -1,0 +1,21 @@
+<section class="products-cards">
+  <h1 class="title">Products</h1>
+  <p class="subtitle">Available products in the marketplace</p>
+
+  <div class="cards">
+    <mat-card *ngFor="let p of data" class="example-card product-card" appearance="outlined">
+      <img mat-card-image [src]="p.image" alt="{{ p.name }}" />
+      <mat-card-header>
+        <mat-card-title>{{ p.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ p.description }}</p>
+        <p>Status: {{ p.status }} · {{ p.price }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary">LIKE</button>
+        <button mat-button color="primary">SHARE</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</section>
