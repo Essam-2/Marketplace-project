@@ -1,0 +1,67 @@
+<section class="user-profile">
+  <div class="profile-header">
+    <h1 class="title">User Profile</h1>
+  </div>
+  <p class="subtitle">Manage your personal information</p>
+
+  <form [formGroup]="userForm" class="profile-form">
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput formControlName="name" placeholder="Enter your full name" required>
+        <mat-icon matPrefix>account_circle</mat-icon>
+        <mat-error *ngIf="userForm.get('name')?.hasError('required')">
+          Name is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('name')?.hasError('minlength')">
+          Name must be at least 3 characters
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput type="email" formControlName="email" placeholder="Enter your email" required>
+        <mat-icon matPrefix>email</mat-icon>
+        <mat-error *ngIf="userForm.get('email')?.hasError('required')">
+          Email is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('email')?.hasError('email')">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile</mat-label>
+        <input matInput type="tel" formControlName="mobile" placeholder="Enter your mobile number" required>
+        <mat-icon matPrefix>phone</mat-icon>
+        <mat-error *ngIf="userForm.get('mobile')?.hasError('required')">
+          Mobile is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('mobile')?.hasError('pattern')">
+          Please enter a valid mobile number (10-15 digits)
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>National ID</mat-label>
+        <input matInput formControlName="nationalId" placeholder="Enter your national ID" required>
+        <mat-icon matPrefix>badge</mat-icon>
+        <mat-error *ngIf="userForm.get('nationalId')?.hasError('required')">
+          National ID is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('nationalId')?.hasError('minlength')">
+          National ID must be at least 10 characters
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="form-actions">
+      <button mat-button (click)="onCancel()">Cancel</button>
+      <button mat-raised-button class="primary-btn" (click)="onSubmit()" [disabled]="!userForm.valid">
+        Save Changes
+      </button>
+    </div>
+  </form>
+</section>
