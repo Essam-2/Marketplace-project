@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -23,7 +24,8 @@ export class OrdersComponent implements OnInit {
   constructor(
     private ordersService: OrdersService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +72,10 @@ export class OrdersComponent implements OnInit {
         });
       }
     });
+  }
+
+  viewDetails(orderId: string): void {
+    this.router.navigate(['/orders', orderId]);
   }
 
   editOrder(order: Order, orderId: string): void {
