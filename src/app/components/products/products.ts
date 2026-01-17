@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { ProductsService } from '../../services/products.service';
 import { Product } from '../../modals/product.model';
 import { ProductFormDialogComponent } from './product-form-dialog/product-form-dialog';
@@ -11,7 +12,7 @@ import { ProductFormDialogComponent } from './product-form-dialog/product-form-d
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatDialogModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatDialogModule, MatSnackBarModule],
   templateUrl: './products.html',
   styleUrls: ['./products.scss'],
 })
@@ -20,7 +21,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private productsService: ProductsService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +35,8 @@ export class ProductsComponent implements OnInit {
         this.data = products;
       },
       error: (error) => {
-        console.error('Error loading products:', error);
-        
-      },
+        this.data = [];
+      }
     });
   }
 
@@ -49,11 +50,21 @@ export class ProductsComponent implements OnInit {
       if (result && result.formData) {
         this.productsService.addProduct(result.formData).subscribe({
           next: (product) => {
-            console.log('Product added successfully:', product);
             this.loadProducts();
+            this.snackBar.open('Product added successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar']
+            });
           },
           error: (error) => {
-            console.error('Error adding product:', error);
+            this.snackBar.open('Error adding product. Please try again.', 'Close', {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar']
+            });
           },
         });
       }
@@ -70,11 +81,21 @@ export class ProductsComponent implements OnInit {
       if (result && result.formData) {
         this.productsService.updateProduct(productId, result.formData).subscribe({
           next: (updatedProduct) => {
-            console.log('Product updated successfully:', updatedProduct);
             this.loadProducts();
+            this.snackBar.open('Product updated successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar']
+            });
           },
           error: (error) => {
-            console.error('Error updating product:', error);
+            this.snackBar.open('Error updating product. Please try again.', 'Close', {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar']
+            });
           },
         });
       }

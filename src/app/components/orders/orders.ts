@@ -4,6 +4,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OrdersService } from '../../services/orders.service';
 import { Order } from '../../modals/order.model';
 import { OrderFormDialogComponent } from './order-form-dialog/order-form-dialog';
@@ -11,7 +12,7 @@ import { OrderFormDialogComponent } from './order-form-dialog/order-form-dialog'
 @Component({
   selector: 'app-orders',
   standalone: true,
-  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule],
+  imports: [CommonModule, MatTableModule, MatIconModule, MatButtonModule, MatDialogModule, MatSnackBarModule],
   templateUrl: './orders.html',
   styleUrls: ['./orders.scss'],
 })
@@ -21,7 +22,8 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private ordersService: OrdersService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -34,7 +36,7 @@ export class OrdersComponent implements OnInit {
         this.data = orders;
       },
       error: (error) => {
-        console.error('Error loading orders:', error);
+        this.data = [];
       },
     });
   }
@@ -49,11 +51,21 @@ export class OrdersComponent implements OnInit {
       if (result && result.order) {
         this.ordersService.addOrder(result.order).subscribe({
           next: (order) => {
-            console.log('Order added successfully:', order);
             this.loadOrders();
+            this.snackBar.open('Order added successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar']
+            });
           },
           error: (error) => {
-            console.error('Error adding order:', error);
+            this.snackBar.open('Error adding order. Please try again.', 'Close', {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar']
+            });
           },
         });
       }
@@ -70,11 +82,22 @@ export class OrdersComponent implements OnInit {
       if (result && result.order) {
         this.ordersService.updateOrder(orderId, result.order).subscribe({
           next: (updatedOrder) => {
-            console.log('Order updated successfully:', updatedOrder);
             this.loadOrders();
+            this.snackBar.open('Order updated successfully!', 'Close', {
+              duration: 3000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['success-snackbar']
+            });
           },
           error: (error) => {
             console.error('Error updating order:', error);
+            this.snackBar.open('Error updating order. Please try again.', 'Close', {
+              duration: 5000,
+              horizontalPosition: 'end',
+              verticalPosition: 'top',
+              panelClass: ['error-snackbar']
+            });
           },
         });
       }
@@ -87,9 +110,21 @@ export class OrdersComponent implements OnInit {
         next: () => {
           console.log('Order deleted successfully');
           this.loadOrders();
+          this.snackBar.open('Order deleted successfully!', 'Close', {
+            duration: 3000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: ['success-snackbar']
+          });
         },
         error: (error) => {
           console.error('Error deleting order:', error);
+          this.snackBar.open('Error deleting order. Please try again.', 'Close', {
+            duration: 5000,
+            horizontalPosition: 'end',
+            verticalPosition: 'top',
+            panelClass: ['error-snackbar']
+          });
         },
       });
     }
