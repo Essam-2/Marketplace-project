@@ -1,0 +1,73 @@
+<h2 mat-dialog-title>{{ dialogTitle }}</h2>
+<mat-dialog-content>
+  <form [formGroup]="productForm" class="product-form">
+
+    <mat-form-field appearance="outline" class="file-upload-field">
+      <mat-label>Image</mat-label>
+      <input matInput formControlName="image" placeholder="No file selected" readonly />
+      <button mat-icon-button matSuffix type="button" (click)="fileInput.click()">
+        <mat-icon>upload_file</mat-icon>
+      </button>
+      <input #fileInput type="file" (change)="onFileSelected($event)" accept="image/*" hidden />
+      <mat-error *ngIf="productForm.get('image')?.hasError('required')">
+        Image is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Product Name</mat-label>
+      <input matInput formControlName="name" placeholder="Enter product name" required>
+      <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+        Name is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Price</mat-label>
+      <input matInput formControlName="price" placeholder="$0.00" required>
+      <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+        Price is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Capacity</mat-label>
+      <mat-select formControlName="capacity" required>
+        <mat-option value="Small">Small</mat-option>
+        <mat-option value="Medium">Medium</mat-option>
+        <mat-option value="Large">Large</mat-option>
+      </mat-select>
+      <mat-error *ngIf="productForm.get('capacity')?.hasError('required')">
+        Capacity is required
+      </mat-error>
+    </mat-form-field>
+
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Status</mat-label>
+      <mat-select formControlName="status" required>
+        <mat-option value="Available">Available</mat-option>
+        <mat-option value="Low stock">Low stock</mat-option>
+        <mat-option value="Out of stock">Out of stock</mat-option>
+      </mat-select>
+      <mat-error *ngIf="productForm.get('status')?.hasError('required')">
+        Status is required
+      </mat-error>
+    </mat-form-field>
+
+
+    <mat-form-field appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput formControlName="description" placeholder="Enter product description" rows="4" required></textarea>
+      <mat-error *ngIf="productForm.get('description')?.hasError('required')">
+        Description is required
+      </mat-error>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-raised-button class="primary-btn" (click)="onSubmit()" [disabled]="!productForm.valid">
+    {{ isEditMode ? 'Update Product' : 'Add Product' }}
+  </button>
+</mat-dialog-actions>

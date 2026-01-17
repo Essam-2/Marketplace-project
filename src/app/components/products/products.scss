@@ -48,3 +48,20 @@
   color: var(--main-color) !important;
   fill: var(--main-color) !important;
 }
+
+.primary-btn {
+  background-color: var(--main-color) !important;
+  color: white !important;
+  margin-left: 16px;
+}
+
+.primary-btn mat-icon {
+  color: white !important;
+}
+
+.product-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
