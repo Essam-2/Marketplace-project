@@ -1,0 +1,33 @@
+.order-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 8px 0;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.primary-btn {
+  background-color: var(--main-color) !important;
+  color: white !important;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0 0;
+}
+
+:host ::ng-deep .mat-mdc-dialog-content {
+  overflow: visible !important;
+  max-height: none !important;
+}
+
+:host ::ng-deep .cdk-global-scrollblock {
+  overflow: hidden !important;
+}
+
+:host ::ng-deep body.cdk-global-scrollblock {
+  overflow: hidden !important;
+}

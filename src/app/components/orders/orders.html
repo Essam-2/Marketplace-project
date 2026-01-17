@@ -1,5 +1,11 @@
 <section class="orders">
-	<h1>Orders List</h1>
+	<div class="order-header">
+		<h1>Orders List</h1>
+		<button mat-raised-button class="primary-btn" (click)="addNewOrder()">
+			<mat-icon>add</mat-icon>
+			Add New Order
+		</button>
+	</div>
 	<p class="subtitle">Products associated with orders</p>
 
 	<table mat-table [dataSource]="data" class="mat-elevation-z1 products-table">
@@ -32,10 +38,10 @@
 		<ng-container matColumnDef="actions">
 			<th mat-header-cell *matHeaderCellDef> Actions </th>
 			<td mat-cell *matCellDef="let element">
-				<button mat-icon-button aria-label="Edit">
+				<button mat-icon-button aria-label="Edit" (click)="editOrder(element, element.id!)">
 					<mat-icon>edit</mat-icon>
 				</button>
-				<button mat-icon-button color="warn" aria-label="Delete">
+				<button mat-icon-button color="warn" aria-label="Delete" (click)="deleteOrder(element.id!)">
 					<mat-icon>delete</mat-icon>
 				</button>
 			</td>

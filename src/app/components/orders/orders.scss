@@ -1,4 +1,27 @@
 .orders { padding: 16px; }
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.order-header h1 {
+  margin: 0;
+  color: var(--main-color);
+  font-weight: bold;
+}
+
+.primary-btn {
+  background-color: var(--main-color) !important;
+  color: white !important;
+}
+
+.primary-btn mat-icon {
+  color: white !important;
+}
+
 .subtitle { color: rgba(0,0,0,0.6); margin-top: 4px; margin-bottom: 12px; }
 .products-table { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); }
 .products-table th, .products-table td { padding: 8px; }
