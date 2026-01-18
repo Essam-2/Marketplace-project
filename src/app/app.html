@@ -20,7 +20,50 @@
       </button>
       <h1>Marketplace</h1>
       <span class="spacer"></span>
-      <button mat-icon-button aria-label="shopping_cart"><mat-icon>shopping_cart</mat-icon></button>
+      <button mat-icon-button [matMenuTriggerFor]="cartMenu" aria-label="shopping_cart">
+        <mat-icon [matBadge]="cartItemCount" [matBadgeHidden]="cartItemCount === 0" matBadgeColor="warn">shopping_cart</mat-icon>
+      </button>
+      <mat-menu #cartMenu="matMenu" class="cart-menu">
+        <div class="cart-header" (click)="$event.stopPropagation()">
+          <h3>Shopping Cart</h3>
+        </div>
+        <mat-divider></mat-divider>
+        
+        <!-- Empty Cart Message -->
+        <div *ngIf="cartItems.length === 0" class="empty-cart" (click)="$event.stopPropagation()">
+          <mat-icon class="empty-icon">shopping_cart</mat-icon>
+          <p>Your cart is empty</p>
+          <small>Add items to your cart to see them here</small>
+        </div>
+
+        <!-- Cart Items -->
+        <div *ngIf="cartItems.length > 0" class="cart-items">
+          <div *ngFor="let item of cartItems" class="cart-item" (click)="$event.stopPropagation()">
+            <div class="item-info">
+              <span class="item-name">{{ item.name }}</span>
+              <span class="item-details">{{ item.quantity }} x {{ item.price }}</span>
+            </div>
+            <button mat-icon-button (click)="removeFromCart(item.id)" color="warn" class="remove-btn">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+          
+          <mat-divider></mat-divider>
+          
+          <div class="cart-footer" (click)="$event.stopPropagation()">
+            <div class="cart-total">
+              <strong>Total:</strong>
+              <strong>{{ cartTotal }}</strong>
+            </div>
+            <button mat-raised-button color="primary" class="checkout-btn">
+              Checkout
+            </button>
+            <button mat-button (click)="clearCart()" class="clear-btn">
+              Clear Cart
+            </button>
+          </div>
+        </div>
+      </mat-menu>
       <button mat-icon-button routerLink="/profile" aria-label="User account"><mat-icon>account_circle</mat-icon></button>
     </mat-toolbar>
     <main class="app-content"><router-outlet></router-outlet></main>
