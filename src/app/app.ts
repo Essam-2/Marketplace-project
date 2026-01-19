@@ -1,6 +1,7 @@
-import { Component, signal } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
 import { RouterOutlet, RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from './services/auth.service';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -40,6 +41,16 @@ interface CartItem {
 })
 export class App {
   protected readonly title = signal('Marketplace-project');
+  
+  constructor(public authService: AuthService) {}
+  
+  get isAuthenticated(): boolean {
+    return this.authService.isAuthenticated;
+  }
+
+  logout(): void {
+    this.authService.logout();
+  }
   
   cartItems: CartItem[] = [
     // Example items to test empty state
