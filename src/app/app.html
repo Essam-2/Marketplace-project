@@ -1,17 +1,29 @@
-<mat-sidenav-container class="sidenav-container" autosize>
+<!-- Show login page when not authenticated -->
+<router-outlet *ngIf="!isAuthenticated"></router-outlet>
+
+<!-- Show main app layout when authenticated -->
+<mat-sidenav-container *ngIf="isAuthenticated" class="sidenav-container" autosize>
   <mat-sidenav #drawer class="app-sidenav" mode="side" opened>
     <mat-toolbar class="sideTitle">MyMenu</mat-toolbar>
-    <mat-nav-list>
-      <a mat-list-item routerLink="/products" routerLinkActive="active">
-        <mat-icon aria-hidden="true">folder</mat-icon> <span>Products</span>
-      </a>
-      <a mat-list-item routerLink="/orders" routerLinkActive="active">
-        <mat-icon aria-hidden="true">receipt_long</mat-icon> <span>Orders</span>
-      </a>
-      <a mat-list-item routerLink="/profile" routerLinkActive="active">
-        <mat-icon aria-hidden="true">person</mat-icon> <span>User Profile</span>
-      </a>
-    </mat-nav-list>
+    <div class="sidenav-content">
+      <mat-nav-list class="nav-items">
+        <a mat-list-item routerLink="/products" routerLinkActive="active">
+          <mat-icon aria-hidden="true">folder</mat-icon> <span>Products</span>
+        </a>
+        <a mat-list-item routerLink="/orders" routerLinkActive="active">
+          <mat-icon aria-hidden="true">receipt_long</mat-icon> <span>Orders</span>
+        </a>
+        <a mat-list-item routerLink="/profile" routerLinkActive="active">
+          <mat-icon aria-hidden="true">person</mat-icon> <span>User Profile</span>
+        </a>
+      </mat-nav-list>
+      <mat-nav-list class="nav-footer">
+        <mat-divider style="margin-bottom: 0.5rem;"></mat-divider>
+        <a mat-list-item (click)="logout()" class="logout-item">
+          <mat-icon aria-hidden="true">logout</mat-icon> <span>Logout</span>
+        </a>
+      </mat-nav-list>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="app-toolbar">

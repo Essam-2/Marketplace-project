@@ -9,6 +9,20 @@
 	color: white;
 	border-top-right-radius: 0 !important;
   border-bottom-right-radius: 0 !important;
+
+	.sidenav-content {
+		display: flex;
+		flex-direction: column;
+		height: calc(100vh - 64px);
+		
+		.nav-items {
+			flex: 1;
+		}
+		
+		.nav-footer {
+			margin-top: auto;
+		}
+	}
 }
 
 .app-toolbar {
@@ -86,6 +100,15 @@ mat-nav-list a[mat-list-item].active mat-icon svg,
 mat-nav-list a[mat-list-item].mat-list-item.active mat-icon svg {
 	color: var(--main-color) !important;
 	fill: var(--main-color) !important;
+}
+
+/* Logout item style */
+.logout-item {
+	cursor: pointer;
+	
+	&:hover {
+		background-color: rgba(255, 255, 255, 0.1) !important;
+	}
 }
 
 /* Shopping Cart Menu Styles */
