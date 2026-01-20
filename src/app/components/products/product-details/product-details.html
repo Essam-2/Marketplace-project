@@ -50,7 +50,7 @@
             <div class="info-section">
               <h3 class="info-label">Status</h3>
               <mat-chip-set>
-                <mat-chip [class]="'status-' + product.status.toLowerCase()">
+                <mat-chip [class]="'status-' + product.status?.toLowerCase()">
                   {{ product.status }}
                 </mat-chip>
               </mat-chip-set>
@@ -61,9 +61,9 @@
               <p class="description">{{ product.description }}</p>
             </div>
 
-            <div class="info-section" *ngIf="product.id">
+            <div class="info-section" *ngIf="product.productId">
               <h3 class="info-label">Product ID</h3>
-              <p class="product-id">{{ product.id }}</p>
+              <p class="product-id">{{ product.productId }}</p>
             </div>
           </div>
         </div>
