@@ -70,35 +70,4 @@ export class ProductsComponent implements OnInit {
       }
     });
   }
-
-  editProduct(product: Product, productId: string): void {
-    const dialogRef = this.dialog.open(ProductFormDialogComponent, {
-      width: '500px',
-      data: { mode: 'edit', product, productId }
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result && result.formData) {
-        this.productsService.updateProduct(productId, result.formData).subscribe({
-          next: (updatedProduct) => {
-            this.loadProducts();
-            this.snackBar.open('Product updated successfully!', 'Close', {
-              duration: 3000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top',
-              panelClass: ['success-snackbar']
-            });
-          },
-          error: (error) => {
-            this.snackBar.open('Error updating product. Please try again.', 'Close', {
-              duration: 5000,
-              horizontalPosition: 'end',
-              verticalPosition: 'top',
-              panelClass: ['error-snackbar']
-            });
-          },
-        });
-      }
-    });
-  }
 }
