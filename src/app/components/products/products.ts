@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,7 +22,8 @@ export class ProductsComponent implements OnInit {
   constructor(
     private productsService: ProductsService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -33,9 +34,11 @@ export class ProductsComponent implements OnInit {
     this.productsService.getProducts().subscribe({
       next: (products) => {
         this.data = products;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.data = [];
+        this.cdr.detectChanges();
       }
     });
   }
