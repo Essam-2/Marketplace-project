@@ -9,7 +9,7 @@
   <p class="subtitle">Available products in the marketplace</p>
   <div class="cards">
     <mat-card *ngFor="let p of data" class="example-card product-card" appearance="outlined">
-      <img mat-card-image [src]="p.image" alt="{{ p.name }}" />
+      <img mat-card-image [src]="p.image || '/assets/placeholder-header.jpg'" alt="{{ p.name }}" />
       <mat-card-header>
         <mat-card-title>{{ p.name }}</mat-card-title>
       </mat-card-header>
