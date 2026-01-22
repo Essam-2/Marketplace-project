@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
@@ -19,7 +19,7 @@ import { OrderFormDialogComponent } from './order-form-dialog/order-form-dialog'
   styleUrls: ['./orders.scss'],
 })
 export class OrdersComponent implements OnInit {
-  displayedColumns = ['name', 'price', 'capacity', 'status', 'actions'];
+  displayedColumns = ['orderDate', 'totalOrderPrice', 'totalItems', 'orderStatusText', 'actions'];
   data: Order[] = [];
 
   constructor(
@@ -27,7 +27,8 @@ export class OrdersComponent implements OnInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router
+    private router: Router,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -39,9 +40,11 @@ export class OrdersComponent implements OnInit {
     this.ordersService.getOrders(sessionId || '').subscribe({
       next: (orders) => {
         this.data = orders;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.data = [];
+        this.cdr.detectChanges();
       },
     });
   }
