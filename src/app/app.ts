@@ -43,10 +43,6 @@ export class App {
   
   constructor(public authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.authService.loadUser().subscribe();
-  }
-
   login(): void {
     this.authService.login();
   }

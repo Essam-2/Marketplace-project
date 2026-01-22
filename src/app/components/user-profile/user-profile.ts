@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '../../services/user.service';
 import { User } from '../../modals/user.model';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -33,7 +34,8 @@ export class UserProfile implements OnInit {
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
@@ -48,7 +50,8 @@ export class UserProfile implements OnInit {
   }
 
   loadUserProfile(): void {
-    this.userService.getUserProfile().subscribe({
+    const sessionId = this.authService.sessionIdSig();
+    this.userService.getUserProfile(sessionId || '').subscribe({
       next: (user) => {
         this.userId = user.id;
         this.userForm.patchValue({

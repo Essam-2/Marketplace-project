@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OrdersService } from '../../services/orders.service';
+import { AuthService } from '../../services/auth.service';
 import { Order } from '../../modals/order.model';
 import { OrderFormDialogComponent } from './order-form-dialog/order-form-dialog';
 
@@ -23,6 +24,7 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     private ordersService: OrdersService,
+    private authService: AuthService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router
@@ -33,7 +35,8 @@ export class OrdersComponent implements OnInit {
   }
 
   loadOrders(): void {
-    this.ordersService.getOrders().subscribe({
+    const sessionId = this.authService.sessionIdSig();    
+    this.ordersService.getOrders(sessionId || '').subscribe({
       next: (orders) => {
         this.data = orders;
       },
