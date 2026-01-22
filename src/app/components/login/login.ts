@@ -47,12 +47,12 @@ export class Login {
       this.loading = true;
       const { email, password } = this.loginForm.value;
       
-      this.authService.login(email, password).then((success) => {
-        if (success) {
-          this.router.navigate(['/products']);
-        }
-        this.loading = false;
-      });
+      // this.authService.login(email, password).then((success) => {
+      //   if (success) {
+      //     this.router.navigate(['/products']);
+      //   }
+      //   this.loading = false;
+      // });
     } else {
       Object.keys(this.loginForm.controls).forEach(key => {
         this.loginForm.get(key)?.markAsTouched();

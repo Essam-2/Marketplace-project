@@ -1,54 +1,79 @@
-<!-- Show login page when not authenticated -->
-<router-outlet *ngIf="!isAuthenticated"></router-outlet>
-
-<!-- Show main app layout when authenticated -->
-<mat-sidenav-container *ngIf="isAuthenticated" class="sidenav-container" autosize>
+<mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav #drawer class="app-sidenav" mode="side" opened>
     <mat-toolbar class="sideTitle">MyMenu</mat-toolbar>
+
     <div class="sidenav-content">
       <mat-nav-list class="nav-items">
         <a mat-list-item routerLink="/products" routerLinkActive="active">
           <mat-icon aria-hidden="true">folder</mat-icon> <span>Products</span>
         </a>
+
         <a mat-list-item routerLink="/orders" routerLinkActive="active">
           <mat-icon aria-hidden="true">receipt_long</mat-icon> <span>Orders</span>
         </a>
+
         <a mat-list-item routerLink="/profile" routerLinkActive="active">
           <mat-icon aria-hidden="true">person</mat-icon> <span>User Profile</span>
         </a>
       </mat-nav-list>
+
       <mat-nav-list class="nav-footer">
         <mat-divider style="margin-bottom: 0.5rem;"></mat-divider>
-        <a mat-list-item (click)="logout()" class="logout-item">
-          <mat-icon aria-hidden="true">logout</mat-icon> <span>Logout</span>
-        </a>
+
+<button *ngIf="!isAuthenticated"
+        mat-list-item
+        type="button"
+        (click)="login()"
+        class="login-item">
+  <mat-icon aria-hidden="true">login</mat-icon>
+  <span>Login</span>
+</button>
+
+<button *ngIf="isAuthenticated"
+        mat-list-item
+        type="button"
+        (click)="logout()"
+        class="logout-item">
+  <mat-icon aria-hidden="true">logout</mat-icon>
+  <span>Logout</span>
+</button>
+
       </mat-nav-list>
     </div>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <mat-toolbar color="primary" class="app-toolbar">
       <button mat-icon-button (click)="drawer.toggle()" aria-label="Toggle navigation">
         <mat-icon>menu</mat-icon>
       </button>
+
       <h1>Marketplace</h1>
       <span class="spacer"></span>
+
       <button mat-icon-button [matMenuTriggerFor]="cartMenu" aria-label="shopping_cart">
-        <mat-icon [matBadge]="cartItemCount" [matBadgeHidden]="cartItemCount === 0" matBadgeColor="warn" aria-hidden="false">shopping_cart</mat-icon>
+        <mat-icon
+          [matBadge]="cartItemCount"
+          [matBadgeHidden]="cartItemCount === 0"
+          matBadgeColor="warn"
+          aria-hidden="false"
+        >
+          shopping_cart
+        </mat-icon>
       </button>
+
       <mat-menu #cartMenu="matMenu" class="cart-menu">
         <div class="cart-header" (click)="$event.stopPropagation()">
           <h3>Shopping Cart</h3>
         </div>
         <mat-divider></mat-divider>
-        
-        <!-- Empty Cart Message -->
+
         <div *ngIf="cartItems.length === 0" class="empty-cart" (click)="$event.stopPropagation()">
           <mat-icon class="empty-icon">shopping_cart</mat-icon>
           <p>Your cart is empty</p>
           <small>Add items to your cart to see them here</small>
         </div>
 
-        <!-- Cart Items -->
         <div *ngIf="cartItems.length > 0" class="cart-items">
           <div *ngFor="let item of cartItems" class="cart-item" (click)="$event.stopPropagation()">
             <div class="item-info">
@@ -59,25 +84,27 @@
               <mat-icon>close</mat-icon>
             </button>
           </div>
-          
+
           <mat-divider></mat-divider>
-          
+
           <div class="cart-footer" (click)="$event.stopPropagation()">
             <div class="cart-total">
               <strong>Total:</strong>
               <strong>{{ cartTotal }}</strong>
             </div>
-            <button mat-raised-button color="primary" class="checkout-btn">
-              Checkout
-            </button>
-            <button mat-button (click)="clearCart()" class="clear-btn">
-              Clear Cart
-            </button>
+            <button mat-raised-button color="primary" class="checkout-btn">Checkout</button>
+            <button mat-button (click)="clearCart()" class="clear-btn">Clear Cart</button>
           </div>
         </div>
       </mat-menu>
-      <button mat-icon-button routerLink="/profile" aria-label="User account"><mat-icon>account_circle</mat-icon></button>
+
+      <button mat-icon-button routerLink="/profile" aria-label="User account">
+        <mat-icon>account_circle</mat-icon>
+      </button>
     </mat-toolbar>
-    <main class="app-content"><router-outlet></router-outlet></main>
+
+    <main class="app-content">
+      <router-outlet></router-outlet>
+    </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
