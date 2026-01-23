@@ -1,0 +1,28 @@
+::ng-deep .mat-mdc-dialog-surface {
+  overflow-y: hidden;
+}
+
+mat-dialog-content {
+  padding: 20px 0;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0;
+}
+
+button {
+  margin-left: 8px;
+  
+  &[mat-button] {
+    color: var(--main-color);
+  }
+  
+  &[mat-flat-button] {
+    background-color: var(--main-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--accent-color);
+    }
+  }
+}
