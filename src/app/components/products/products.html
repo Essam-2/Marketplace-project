@@ -1,6 +1,10 @@
 <section class="products-cards">
   <div class="product-header">
     <h1 class="title">Our Products</h1>
+    <button mat-raised-button color="primary" (click)="goToCart()" class="cart-button">
+      <mat-icon [matBadge]="cartItemCount" [matBadgeHidden]="cartItemCount === 0" matBadgeColor="warn">shopping_cart</mat-icon>
+      View Cart
+    </button>
   </div>
   <p class="subtitle">Available products in the marketplace</p>
   <div class="cards">
@@ -11,11 +15,20 @@
       </mat-card-header>
       <mat-card-content>
         <p>{{ p.description }}</p>
-        <p>Status: {{ p.status || 'N/A' }} | Price: {{ p.price }}</p>
+        <p><strong>Price:</strong> ${{ p.price }}</p>
+        <p [class.out-of-stock]="!p.availableQuantity || p.availableQuantity <= 0">
+          <strong>Available:</strong> {{ p.availableQuantity || 0 }} in stock
+        </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button color="primary"><mat-icon style="margin: 0px;">shopping_cart</mat-icon></button>
-        <button mat-button color="primary"><mat-icon style="margin: 0px;">favorite</mat-icon></button>
+        <button 
+          mat-raised-button 
+          color="primary" 
+          (click)="addToCart(p)"
+          [disabled]="!p.availableQuantity || p.availableQuantity <= 0">
+          <mat-icon>add_shopping_cart</mat-icon>
+          {{ (!p.availableQuantity || p.availableQuantity <= 0) ? 'Out of Stock' : 'Add to Cart' }}
+        </button>
       </mat-card-actions>
     </mat-card>
   </div>
