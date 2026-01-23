@@ -20,23 +20,21 @@
       <mat-nav-list class="nav-footer">
         <mat-divider style="margin-bottom: 0.5rem;"></mat-divider>
 
-<button *ngIf="!isAuthenticated"
-        mat-list-item
-        type="button"
-        (click)="login()"
-        class="login-item">
-  <mat-icon aria-hidden="true">login</mat-icon>
-  <span>Login</span>
-</button>
+          <a *ngIf="!isAuthenticated"
+                  mat-list-item
+                  (click)="login()"
+                  class="login-item">
+            <mat-icon aria-hidden="true">login</mat-icon>
+            <span>Login</span>
+          </a>
 
-<button *ngIf="isAuthenticated"
-        mat-list-item
-        type="button"
-        (click)="logout()"
-        class="logout-item">
-  <mat-icon aria-hidden="true">logout</mat-icon>
-  <span>Logout</span>
-</button>
+          <a *ngIf="isAuthenticated"
+                  mat-list-item
+                  (click)="logout()"
+                  class="logout-item">
+            <mat-icon aria-hidden="true">logout</mat-icon>
+            <span>Logout</span>
+          </a>
 
       </mat-nav-list>
     </div>
