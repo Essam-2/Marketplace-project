@@ -2,10 +2,11 @@ import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { catchError, of, tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly bffBaseUrl = 'https://localhost:7251';
+  private apiUrl = environment.apiUrl;
 
   private readonly _isAuthenticated = signal<boolean>(false);
   isAuthenticatedSig = this._isAuthenticated;
@@ -39,22 +40,16 @@ export class AuthService {
     // Get session ID from cookie
     const sessionId = this.getSessionId();
     
-    console.log('=== AUTH CHECK ===');
-    console.log('Session ID:', sessionId);
-    
     if (sessionId) {
       this._isAuthenticated.set(true);
       this.sessionIdSig.set(sessionId);
-      console.log('User authenticated: true');
     } else {
       this._isAuthenticated.set(false);
       this.sessionIdSig.set(null);
-      console.log('User not authenticated');
     }
-    console.log('==================');
 
     // Still try to load user from BFF for additional user data (optional)
-    return this.http.get<any>(`${this.bffBaseUrl}/bff/user`, { withCredentials: true }).pipe(
+    return this.http.get<any>(`${this.apiUrl}/bff/user`, { withCredentials: true }).pipe(
       tap((user) => {
         console.log('User data from BFF:', user);
         if (Array.isArray(user) && user.length > 0) {
@@ -72,7 +67,7 @@ export class AuthService {
 
     const bffReturnUrl = `/spa/callback?to=${encodeURIComponent(spaPath)}`;
 
-    window.location.href = `${this.bffBaseUrl}/bff/login?returnUrl=${encodeURIComponent(bffReturnUrl)}`;
+    window.location.href = `${this.apiUrl}/bff/login?returnUrl=${encodeURIComponent(bffReturnUrl)}`;
   }
 
   /** Logout */
