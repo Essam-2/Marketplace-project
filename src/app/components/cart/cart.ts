@@ -139,17 +139,12 @@ export class CartComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
 
-    // Create order payload
-    // Note: Adjust this based on your actual Order API requirements
+    // Create order payload matching the API structure
     const orderData = {
-      name: `Order - ${new Date().toLocaleDateString()}`,
-      price: this.cart.totalPrice.toString(),
-      capacity: `${this.cart.totalItems} items`,
-      status: 'pending',
       items: this.cart.items.map(item => ({
         productId: item.product.productId,
         productName: item.product.name,
-        quantity: item.quantity,
+        qty: item.quantity,
         price: item.product.price,
       })),
     };
