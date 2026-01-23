@@ -48,8 +48,8 @@ export class AuthService {
       this.sessionIdSig.set(null);
     }
 
-    // Still try to load user from BFF for additional user data (optional)
-    return this.http.get<any>(`${this.apiUrl}/bff/user`, { withCredentials: true }).pipe(
+    // Still try to load user from BFF for additional user data 
+    return this.http.get<any>(`${this.apiUrl}/me`, { withCredentials: true }).pipe(
       tap((user) => {
         if (Array.isArray(user) && user.length > 0) {
           this.userSig.set(user);
