@@ -12,23 +12,16 @@ export class OrdersService {
 
   constructor(private http: HttpClient) {}
 
-  getOrders(customerId: string): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.apiUrl}/orders/by-customer/${customerId}`);
+  getOrders(): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.apiUrl}/orders/my`, { withCredentials: true });
   }
 
   getOrderById(id: string): Observable<Order> {
-    return this.http.get<Order>(`${this.apiUrl}/orders/${id}`);
+    return this.http.get<Order>(`${this.apiUrl}/orders/${id}/details`, { withCredentials: true });
   }
 
   addOrder(order: Order): Observable<Order> {
     return this.http.post<Order>(`${this.apiUrl}/orders`, order);
   }
 
-  updateOrder(id: string, order: Order): Observable<Order> {
-    return this.http.put<Order>(`${this.apiUrl}/orders/${id}`, order);
-  }
-
-  deleteOrder(id: string): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/orders/${id}`);
-  }
 }
