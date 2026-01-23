@@ -57,3 +57,21 @@ mat-form-field {
     grid-template-columns: 1fr;
   }
 }
+
+button {
+  margin-left: 8px;
+  
+  &[mat-button] {
+    color: var(--main-color);
+  }
+  
+  &[mat-flat-button] {
+    background-color: var(--main-color);
+    color: white;
+    
+    &:hover {
+      background-color: var(--accent-color);
+    }
+  }
+}
+

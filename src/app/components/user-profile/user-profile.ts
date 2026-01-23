@@ -50,8 +50,7 @@ export class UserProfile implements OnInit {
   }
 
   loadUserProfile(): void {
-    const sessionId = this.authService.sessionIdSig();
-    this.userService.getUserProfile(sessionId || '').subscribe({
+    this.userService.getUserProfile().subscribe({
       next: (user) => {
         this.userId = user.id;
         this.userForm.patchValue({
@@ -71,9 +70,7 @@ export class UserProfile implements OnInit {
     if (this.userForm.valid) {
       const user: User = this.userForm.value;
       
-      const saveRequest = this.userId 
-        ? this.userService.updateUserProfile(user)
-        : this.userService.createUserProfile(user);
+      const saveRequest = this.userService.updateUserProfile(user);
       
       saveRequest.subscribe({
         next: (savedUser) => {
