@@ -88,9 +88,9 @@
           <div class="cart-footer" (click)="$event.stopPropagation()">
             <div class="cart-total">
               <strong>Total:</strong>
-              <strong>{{ cartTotal }}</strong>
+              <strong>${{ cartTotal.toFixed(2) }}</strong>
             </div>
-            <button mat-raised-button color="primary" class="checkout-btn">Checkout</button>
+            <button mat-raised-button color="primary" class="checkout-btn" (click)="goToCart()">View Cart</button>
             <button mat-button (click)="clearCart()" class="clear-btn">Clear Cart</button>
           </div>
         </div>

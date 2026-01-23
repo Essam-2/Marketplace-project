@@ -2,8 +2,7 @@ export interface Product {
   productId?: string;
   name: string;
   price: number;
-  capacity?: string;
-  status?: string;
+  availableQuantity?: number;
   image?: string;
   description?: string;
 }
