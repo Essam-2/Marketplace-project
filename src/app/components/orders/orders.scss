@@ -26,3 +26,35 @@
 .products-table { width: 100%; border-radius: 8px; overflow: hidden; border: 1px solid rgba(0,0,0,0.08); }
 .products-table th, .products-table td { padding: 8px; }
 .products-table td button { margin-right: 6px; }
+
+.orders-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  margin: 24px 0;
+}
+
+/* Status badge styles */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.status-active {
+  background-color: #e8f5e9;
+  color: #4caf50;
+}
+
+.status-pending {
+  background-color: #fff3e0;
+  color: #ff9800;
+}
+
+.status-inactive {
+  background-color: #ffebee;
+  color: #f44336;
+}

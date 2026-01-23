@@ -4,8 +4,11 @@
 	</div>
 	<p class="subtitle">Products associated with orders</p>
 
-	<table mat-table [dataSource]="data" class="mat-elevation-z1 products-table">
+	<div *ngIf="isLoading" class="orders-loading">
+    <mat-spinner diameter="48"></mat-spinner>
+  </div>
 
+	<table *ngIf="!isLoading" mat-table [dataSource]="data" class="mat-elevation-z1 products-table">
 		<!-- Order Date Column -->
 		<ng-container matColumnDef="orderDate">
 			<th mat-header-cell *matHeaderCellDef> Order Date </th>
@@ -27,7 +30,13 @@
 		<!-- Status Column -->
 		<ng-container matColumnDef="orderStatusText">
 			<th mat-header-cell *matHeaderCellDef> Status </th>
-			<td mat-cell *matCellDef="let element"> {{element.orderStatusText}} </td>
+			<td mat-cell *matCellDef="let element">
+				<span class="status-badge" [ngClass]="{
+				  'status-active': element.orderStatusText === 'Active' || element.orderStatusText === 'Completed',
+				  'status-pending': element.orderStatusText === 'Pending',
+				  'status-inactive': element.orderStatusText === 'Inactive' || element.orderStatusText === 'Cancelled'
+				}">{{ element.orderStatusText }}</span>
+			</td>
 		</ng-container>
 
 		<!-- Actions Column -->
@@ -36,12 +45,6 @@
 			<td mat-cell *matCellDef="let element">
 				<button mat-icon-button color="primary" aria-label="Details" (click)="viewDetails(element.orderId)">
 					<mat-icon>visibility</mat-icon>
-				</button>
-				<button mat-icon-button aria-label="Edit" (click)="editOrder(element, element.orderId)">
-					<mat-icon>edit</mat-icon>
-				</button>
-				<button mat-icon-button color="warn" aria-label="Delete" (click)="deleteOrder(element.orderId)">
-					<mat-icon>delete</mat-icon>
 				</button>
 			</td>
 		</ng-container>
