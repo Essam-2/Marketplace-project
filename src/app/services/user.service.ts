@@ -12,15 +12,12 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getUserProfile(customerId: string): Observable<User> {
-    return this.http.get<User>(`${this.apiUrl}/me/${customerId}`);
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(`${this.apiUrl}/me`, { withCredentials: true });
   }
 
   updateUserProfile(user: User): Observable<User> {
-    return this.http.put<User>(`${this.apiUrl}/user/profile`, user);
+    return this.http.put<User>(`${this.apiUrl}/me`, user, { withCredentials: true });
   }
 
-  createUserProfile(user: User): Observable<User> {
-    return this.http.post<User>(`${this.apiUrl}/user/profile`, user);
-  }
 }
