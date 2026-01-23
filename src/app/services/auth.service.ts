@@ -69,23 +69,20 @@ export class AuthService {
   }
 
   /** Logout */
-  logout() {    
-    // Remove the idsrv.session cookie
-    document.cookie = 'idsrv.session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure';
-    
-    // Also try to remove it for the BFF domain
-    document.cookie = 'idsrv.session=; path=/; domain=localhost; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure';
-    
-    // Clear auth state
-    this.userSig.set(null);
-    this._isAuthenticated.set(false);
-    this.sessionIdSig.set(null);
-    
-    
-    // Navigate to products
-    this.router.navigate(['/products']);
-    
-    // Return observable for consistency
-    return of(null);
+  logout() {
+    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
+      tap(() => {
+        // Clear auth state only on successful logout
+        this.userSig.set(null);
+        this._isAuthenticated.set(false);
+        this.sessionIdSig.set(null);
+
+        // Navigate to products
+        this.router.navigate(['/products']);
+      }),
+      catchError((error) => {
+        return of(null);
+      })
+    );
   }
 }
