@@ -103,7 +103,6 @@ export class OrdersComponent implements OnInit {
             });
           },
           error: (error) => {
-            console.error('Error updating order:', error);
             this.snackBar.open('Error updating order. Please try again.', 'Close', {
               duration: 5000,
               horizontalPosition: 'end',
@@ -120,7 +119,6 @@ export class OrdersComponent implements OnInit {
     if (confirm('Are you sure you want to delete this order?')) {
       this.ordersService.deleteOrder(orderId).subscribe({
         next: () => {
-          console.log('Order deleted successfully');
           this.loadOrders();
           this.snackBar.open('Order deleted successfully!', 'Close', {
             duration: 3000,
@@ -130,7 +128,6 @@ export class OrdersComponent implements OnInit {
           });
         },
         error: (error) => {
-          console.error('Error deleting order:', error);
           this.snackBar.open('Error deleting order. Please try again.', 'Close', {
             duration: 5000,
             horizontalPosition: 'end',

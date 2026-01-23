@@ -51,13 +51,11 @@ export class AuthService {
     // Still try to load user from BFF for additional user data (optional)
     return this.http.get<any>(`${this.apiUrl}/bff/user`, { withCredentials: true }).pipe(
       tap((user) => {
-        console.log('User data from BFF:', user);
         if (Array.isArray(user) && user.length > 0) {
           this.userSig.set(user);
         }
       }),
       catchError((error) => {
-        console.log('BFF user endpoint not available (using cookie auth only)');
         return of(undefined);
       }),
     );
@@ -67,13 +65,11 @@ export class AuthService {
 
     const bffReturnUrl = `/spa/callback?to=${encodeURIComponent(spaPath)}`;
 
-    window.location.href = `${this.apiUrl}/bff/login?returnUrl=${encodeURIComponent(bffReturnUrl)}`;
+    window.location.href = `${this.apiUrl}/login?returnUrl=${encodeURIComponent(bffReturnUrl)}`;
   }
 
   /** Logout */
-  logout() {
-    console.log('Logging out...');
-    
+  logout() {    
     // Remove the idsrv.session cookie
     document.cookie = 'idsrv.session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC; SameSite=None; Secure';
     
@@ -85,8 +81,6 @@ export class AuthService {
     this._isAuthenticated.set(false);
     this.sessionIdSig.set(null);
     
-    console.log('Cookie removed, auth state cleared');
-    console.log('Remaining cookies:', document.cookie);
     
     // Navigate to products
     this.router.navigate(['/products']);
