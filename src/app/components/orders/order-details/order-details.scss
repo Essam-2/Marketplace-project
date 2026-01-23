@@ -12,12 +12,15 @@
 .title {
   font-size: 32px;
   font-weight: bold;
+  padding: 24px;
+  // margin: 0 auto;
   color: var(--main-color);
-  margin: 0;
+  // margin: 0;
 }
 
 .details-card {
   max-width: 800px;
+  padding: 24px;
   margin: 0 auto;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -59,16 +62,113 @@ mat-card-content {
   font-weight: 500;
 }
 
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .status-active {
+  background-color: #e8f5e9;
   color: #4caf50;
 }
 
 .status-pending {
+  background-color: #fff3e0;
   color: #ff9800;
 }
 
 .status-inactive {
+  background-color: #ffebee;
   color: #f44336;
+}
+
+// Order Items Section
+h3 {
+  color: var(--main-color);
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+}
+
+.item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.item-name {
+  font-weight: 600;
+  color: var(--main-color);
+  font-size: 16px;
+}
+
+.item-details {
+  font-size: 14px;
+  color: #666;
+}
+
+.item-subtotal {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--main-color);
+}
+
+// Totals Section
+.totals-section {
+  margin-top: 20px;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  font-size: 16px;
+}
+
+.total-row.grand-total {
+  border-top: 2px solid var(--main-color);
+  padding-top: 16px;
+  margin-top: 8px;
+  
+  .total-label {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--main-color);
+  }
+  
+  .total-value {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--main-color);
+  }
+}
+
+.total-label {
+  font-weight: 600;
+  color: #666;
+}
+
+.total-value {
+  font-weight: 600;
+  color: #333;
 }
 
 .loading {

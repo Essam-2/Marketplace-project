@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { OrdersService } from '../../../services/orders.service';
 import { Order } from '../../../modals/order.model';
@@ -11,9 +12,9 @@ import { Order } from '../../../modals/order.model';
 @Component({
   selector: 'app-order-details',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatSnackBarModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatIconModule, MatDividerModule, MatSnackBarModule],
   templateUrl: './order-details.html',
-  styleUrl: './order-details.scss',
+  styleUrls: ['./order-details.scss'],
 })
 export class OrderDetails implements OnInit {
   order?: Order;
@@ -23,7 +24,9 @@ export class OrderDetails implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private ordersService: OrdersService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,    
+    private cdr: ChangeDetectorRef,
+
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +40,7 @@ export class OrderDetails implements OnInit {
     this.ordersService.getOrderById(this.orderId).subscribe({
       next: (order) => {
         this.order = order;
+        this.cdr.detectChanges();
       },
       error: (error) => {
         this.order = undefined;

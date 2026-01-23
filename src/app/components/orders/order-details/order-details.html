@@ -3,7 +3,6 @@
     <button mat-icon-button (click)="goBack()">
       <mat-icon>arrow_back</mat-icon>
     </button>
-    <h1 class="title">Order Details</h1>
   </div>
 
   <mat-card *ngIf="order" class="details-card">
@@ -12,39 +11,54 @@
     </mat-card-header>
     
     <mat-card-content>
-      <div class="detail-row">
-        <span class="detail-label">Order ID:</span>
-        <span class="detail-value">{{ order.id }}</span>
-      </div>
       
       <div class="detail-row">
-        <span class="detail-label">Product Name:</span>
-        <span class="detail-value">{{ order.name }}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Price:</span>
-        <span class="detail-value">{{ order.price }}</span>
-      </div>
-      
-      <div class="detail-row">
-        <span class="detail-label">Capacity:</span>
-        <span class="detail-value">{{ order.capacity }}</span>
+        <span class="detail-label">Order Date:</span>
+        <span class="detail-value">{{ order.orderDate | date:'medium' }}</span>
       </div>
       
       <div class="detail-row">
         <span class="detail-label">Status:</span>
-        <span class="detail-value" [ngClass]="{
-          'status-active': order.status === 'Active',
-          'status-pending': order.status === 'Pending',
-          'status-inactive': order.status === 'Inactive'
-        }">{{ order.status }}</span>
+        <span class="detail-value status-badge" [ngClass]="{
+          'status-active': order.statusText === 'Active' || order.statusText === 'Completed',
+          'status-pending': order.statusText === 'Pending',
+          'status-inactive': order.statusText === 'Inactive' || order.statusText === 'Cancelled'
+        }">{{ order.statusText }}</span>
+      </div>
+      
+      <div class="detail-row" *ngIf="order.customer">
+        <span class="detail-label">Customer:</span>
+        <span class="detail-value">{{ order.customer.name }}</span>
+      </div>
+
+      <mat-divider style="margin: 20px 0;"></mat-divider>
+
+      <h3>Order Items</h3>
+      <div class="order-items">
+        <div *ngFor="let item of order.items" class="item-row">
+          <div class="item-info">
+            <span class="item-name">{{ item.productName }}</span>
+            <span class="item-details">{{ item.qty }} x ${{ item.price.toFixed(2) }}</span>
+          </div>
+          <div class="item-subtotal">
+            ${{ (item.qty * item.price).toFixed(2) }}
+          </div>
+        </div>
+      </div>
+
+      <mat-divider style="margin: 20px 0;"></mat-divider>
+
+      <div class="totals-section" *ngIf="order.totals">
+        <div class="total-row">
+          <span class="total-label">Total Items:</span>
+          <span class="total-value">{{ order.totals.items }}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span class="total-label">Total Price:</span>
+          <span class="total-value">${{ order.totals.price.toFixed(2) }}</span>
+        </div>
       </div>
     </mat-card-content>
-    
-    <mat-card-actions align="end">
-      <button mat-button (click)="goBack()">Back to Orders</button>
-    </mat-card-actions>
   </mat-card>
 
   <div *ngIf="!order" class="loading">
