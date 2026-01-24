@@ -2,7 +2,7 @@
   <div class="product-header">
     <h1 class="title">Our Products</h1>
     <button mat-raised-button color="primary" (click)="goToCart()" class="cart-button">
-      <mat-icon [matBadge]="cartItemCount" [matBadgeHidden]="cartItemCount === 0" matBadgeColor="warn">shopping_cart</mat-icon>
+      <mat-icon aria-hidden="false" [matBadge]="cartItemCount" [matBadgeHidden]="cartItemCount === 0" matBadgeColor="warn">shopping_cart</mat-icon>
       View Cart
     </button>
   </div>
