@@ -40,8 +40,8 @@ export class UserProfile implements OnInit {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10,15}$/)]],
-      nationalId: ['', [Validators.required, Validators.minLength(10)]],
+      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      nationalId: ['', [Validators.required, Validators.minLength(14)]],
     });
   }
 

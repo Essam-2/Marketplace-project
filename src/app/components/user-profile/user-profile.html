@@ -40,7 +40,7 @@
           Mobile is required
         </mat-error>
         <mat-error *ngIf="userForm.get('mobile')?.hasError('pattern')">
-          Please enter a valid mobile number (10-15 digits)
+          Please enter a valid mobile number (10 digits)
         </mat-error>
       </mat-form-field>
 
@@ -52,7 +52,7 @@
           National ID is required
         </mat-error>
         <mat-error *ngIf="userForm.get('nationalId')?.hasError('minlength')">
-          National ID must be at least 10 characters
+          National ID must be at least 14 characters
         </mat-error>
       </mat-form-field>
     </div>
