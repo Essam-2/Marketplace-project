@@ -44,11 +44,6 @@ export class ProductsComponent implements OnInit {
   loadProducts(): void {
     this.productsService.getProducts().subscribe({
       next: (products) => {
-           // Log all cookies for debugging
-            console.log('=== ALL COOKIES ===');
-            console.log('document.cookie:', document.cookie);
-            console.log('Cookies split:', document.cookie.split(';').map(c => c.trim()));
-            console.log('==================');
         this.data = products;
         this.cdr.detectChanges();
       },
