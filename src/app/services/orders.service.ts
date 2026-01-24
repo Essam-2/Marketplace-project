@@ -21,7 +21,7 @@ export class OrdersService {
   }
 
   addOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(`${this.apiUrl}/orders`, order);
+    return this.http.post<Order>(`${this.apiUrl}/orders/create-with-items`, order, { withCredentials: true });
   }
 
 }

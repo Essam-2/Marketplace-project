@@ -141,11 +141,13 @@ export class CartComponent implements OnInit, OnDestroy {
 
     // Create order payload matching the API structure
     const orderData = {
+      totalItems: this.cart.items.reduce((sum, item) => sum + item.quantity, 0),
+      totalOrderPrice: this.cart.totalPrice,
       items: this.cart.items.map(item => ({
         productId: item.product.productId,
-        productName: item.product.name,
-        qty: item.quantity,
-        price: item.product.price,
+        quantity: item.quantity,
+        unitPrice: item.product.price,
+        name: item.product.name,
       })),
     };
 
