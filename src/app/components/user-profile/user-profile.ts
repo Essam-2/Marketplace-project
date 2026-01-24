@@ -25,7 +25,7 @@ import { AuthService } from '../../services/auth.service';
     MatSnackBarModule,
   ],
   templateUrl: './user-profile.html',
-  styleUrl: './user-profile.scss',
+  styleUrls: ['./user-profile.scss'],
 })
 export class UserProfile implements OnInit {
   userForm: FormGroup;
@@ -74,9 +74,6 @@ export class UserProfile implements OnInit {
       
       saveRequest.subscribe({
         next: (savedUser) => {
-          if (!this.userId) {
-            this.userId = savedUser.id;
-          }
           this.snackBar.open('Profile saved successfully!', 'Close', {
             duration: 3000,
             horizontalPosition: 'end',
