@@ -80,11 +80,9 @@
           <mat-divider></mat-divider>
 
           <div class="cart-actions">
-            <button mat-raised-button (click)="placeOrder()" [disabled]="isLoading" class="order-button">
-              <mat-icon *ngIf="!isLoading">check_circle</mat-icon>
-              <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
-              <span *ngIf="!isLoading">Place Order</span>
-              <span *ngIf="isLoading">Processing...</span>
+            <button mat-raised-button (click)="proceedToCheckout()" [disabled]="isLoading" class="order-button">
+              <mat-icon>payment</mat-icon>
+              <span>Proceed to Checkout</span>
             </button>
 
             <button mat-stroked-button (click)="continueShopping()" class="secondary-btn">

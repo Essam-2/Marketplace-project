@@ -1,0 +1,219 @@
+<section class="checkout-container">
+  <div class="checkout-header">
+    <button mat-raised-button (click)="goBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Cart
+    </button>
+    <h1>Checkout</h1>
+  </div>
+
+  <div class="checkout-content" *ngIf="cart">
+    <div class="checkout-form-section">
+      <!-- Order Summary -->
+      <mat-card class="order-summary-card">
+        <mat-card-header>
+          <mat-card-title>Order Summary</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="order-items">
+            <div *ngFor="let item of cart.items" class="order-item">
+              <div class="item-info">
+                <span class="item-name">{{ item.product.name }}</span>
+                <span class="item-quantity">x{{ item.quantity }}</span>
+              </div>
+              <span class="item-price">${{ (item.product.price * item.quantity).toFixed(2) }}</span>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <div class="summary-item total">
+            <span>Total ({{ cart.totalItems }} items)</span>
+            <span>${{ cart.totalPrice.toFixed(2) }}</span>
+          </div>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Delivery Information -->
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>location_on</mat-icon>
+            Delivery Information
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="checkoutForm">
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Select Address</mat-label>
+              <mat-select formControlName="addressSelection" placeholder="Choose an address">
+                <mat-option *ngFor="let addr of savedAddresses" [value]="addr.id">
+                  <div class="address-option">
+                    <strong>{{ addr.label }}</strong>
+                    <span class="address-text">{{ addr.address }}</span>
+                  </div>
+                </mat-option>
+                <mat-option value="new">
+                  <div class="address-option new-address">
+                    <mat-icon>add</mat-icon>
+                    <strong>Add New Address</strong>
+                  </div>
+                </mat-option>
+              </mat-select>
+              <mat-icon matPrefix>home</mat-icon>
+              <mat-error *ngIf="checkoutForm.get('addressSelection')?.hasError('required')">
+                Please select an address
+              </mat-error>
+            </mat-form-field>
+
+            <!-- New Address Field (shown when "Add New Address" is selected) -->
+            <mat-form-field appearance="outline" class="full-width" *ngIf="showNewAddressField">
+              <mat-label>Enter New Address</mat-label>
+              <textarea
+                matInput
+                formControlName="newAddress"
+                placeholder="Enter your full address"
+                rows="3"
+              ></textarea>
+              <mat-icon matPrefix>edit_location</mat-icon>
+              <mat-error *ngIf="checkoutForm.get('newAddress')?.hasError('required')">
+                Address is required
+              </mat-error>
+              <mat-error *ngIf="checkoutForm.get('newAddress')?.hasError('minlength')">
+                Address must be at least 10 characters
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="full-width">
+              <mat-label>Mobile Number</mat-label>
+              <input
+                matInput
+                formControlName="mobile"
+                placeholder="Enter your mobile number"
+                type="tel"
+              />
+              <mat-icon matPrefix>phone</mat-icon>
+              <mat-error *ngIf="checkoutForm.get('mobile')?.hasError('required')">
+                Mobile number is required
+              </mat-error>
+              <mat-error *ngIf="checkoutForm.get('mobile')?.hasError('pattern')">
+                Please enter a valid mobile number (10-15 digits)
+              </mat-error>
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Payment Method -->
+      <mat-card class="form-card">
+        <mat-card-header>
+          <mat-card-title>
+            <mat-icon>payment</mat-icon>
+            Payment Method
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <form [formGroup]="checkoutForm">
+            <mat-radio-group formControlName="paymentMethod" class="payment-methods">
+              <mat-radio-button *ngFor="let method of paymentMethods" [value]="method.value" class="payment-option">
+                <div class="payment-option-content">
+                  <mat-icon>{{ method.icon }}</mat-icon>
+                  <span>{{ method.label }}</span>
+                </div>
+              </mat-radio-button>
+            </mat-radio-group>
+
+            <!-- Card Details (shown only for card payments) -->
+            <div *ngIf="isCardPayment" class="card-details">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Card Number</mat-label>
+                <input
+                  matInput
+                  formControlName="cardNumber"
+                  placeholder="1234 5678 9012 3456"
+                  maxlength="16"
+                />
+                <mat-icon matPrefix>credit_card</mat-icon>
+                <mat-error *ngIf="checkoutForm.get('cardNumber')?.hasError('required')">
+                  Card number is required
+                </mat-error>
+                <mat-error *ngIf="checkoutForm.get('cardNumber')?.hasError('pattern')">
+                  Please enter a valid 16-digit card number
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Card Holder Name</mat-label>
+                <input
+                  matInput
+                  formControlName="cardHolder"
+                  placeholder="John Doe"
+                />
+                <mat-icon matPrefix>person</mat-icon>
+                <mat-error *ngIf="checkoutForm.get('cardHolder')?.hasError('required')">
+                  Card holder name is required
+                </mat-error>
+              </mat-form-field>
+
+              <div class="card-row">
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>Expiry Date</mat-label>
+                  <input
+                    matInput
+                    formControlName="expiryDate"
+                    placeholder="MM/YY"
+                    maxlength="5"
+                  />
+                  <mat-icon matPrefix>date_range</mat-icon>
+                  <mat-error *ngIf="checkoutForm.get('expiryDate')?.hasError('required')">
+                    Expiry date is required
+                  </mat-error>
+                  <mat-error *ngIf="checkoutForm.get('expiryDate')?.hasError('pattern')">
+                    Format: MM/YY
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" class="half-width">
+                  <mat-label>CVV</mat-label>
+                  <input
+                    matInput
+                    formControlName="cvv"
+                    placeholder="123"
+                    maxlength="4"
+                    type="password"
+                  />
+                  <mat-icon matPrefix>lock</mat-icon>
+                  <mat-error *ngIf="checkoutForm.get('cvv')?.hasError('required')">
+                    CVV is required
+                  </mat-error>
+                  <mat-error *ngIf="checkoutForm.get('cvv')?.hasError('pattern')">
+                    Please enter a valid CVV
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <!-- Cash on Delivery Note -->
+            <div *ngIf="selectedPaymentMethod === 'cash'" class="cash-note">
+              <mat-icon>info</mat-icon>
+              <p>You will pay in cash when your order is delivered.</p>
+            </div>
+          </form>
+        </mat-card-content>
+      </mat-card>
+
+      <!-- Place Order Button -->
+      <div class="action-section">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="placeOrder()"
+          [disabled]="isLoading || checkoutForm.invalid"
+          class="place-order-btn"
+        >
+          <mat-spinner *ngIf="isLoading" diameter="20"></mat-spinner>
+          <mat-icon *ngIf="!isLoading">shopping_bag</mat-icon>
+          {{ isLoading ? 'Processing...' : 'Place Order' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

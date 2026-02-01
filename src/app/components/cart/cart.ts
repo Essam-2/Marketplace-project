@@ -124,9 +124,9 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Create order from cart items
+   * Proceed to checkout page
    */
-  placeOrder(): void {
+  proceedToCheckout(): void {
     if (!this.cart || this.cart.items.length === 0) {
       this.snackBar.open('Your cart is empty', 'Close', {
         duration: 3000,
@@ -137,42 +137,7 @@ export class CartComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.isLoading = true;
-
-    // Create order payload matching the API structure
-    const orderData = {
-      totalItems: this.cart.items.reduce((sum, item) => sum + item.quantity, 0),
-      totalOrderPrice: this.cart.totalPrice,
-      items: this.cart.items.map(item => ({
-        productId: item.product.productId,
-        quantity: item.quantity,
-        unitPrice: item.product.price,
-        name: item.product.name,
-      })),
-    };
-
-    this.ordersService.addOrder(orderData as any).subscribe({
-      next: (order) => {
-        this.isLoading = false;
-        this.cartService.clearCart();
-        this.snackBar.open('Order placed successfully!', 'Close', {
-          duration: 3000,
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['success-snackbar'],
-        });
-        this.router.navigate(['/orders']);
-      },
-      error: (error) => {
-        this.isLoading = false;
-        this.snackBar.open('Failed to place order. Please try again.', 'Close', {
-          duration: 5000,
-          horizontalPosition: 'end',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar'],
-        });
-      },
-    });
+    this.router.navigate(['/checkout']);
   }
 
   /**
