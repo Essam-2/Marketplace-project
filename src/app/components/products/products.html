@@ -23,6 +23,13 @@
       <mat-card-actions>
         <button 
           mat-raised-button 
+          color="accent" 
+          (click)="viewProductDetails(p)">
+          <mat-icon>visibility</mat-icon>
+          View Details
+        </button>
+        <button 
+          mat-raised-button 
           color="primary" 
           (click)="addToCart(p)"
           [disabled]="!p.availableQuantity || p.availableQuantity <= 0">

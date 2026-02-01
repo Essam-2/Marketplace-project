@@ -21,6 +21,14 @@ import { Product } from '../../modals/product.model';
 export class ProductsComponent implements OnInit {
   data: Product[] = [];
   cartItemCount = 0;
+  
+  // Array of available images in assets folder
+  private productImages: string[] = [
+    '/assets/image1.jpg',
+    '/assets/image2.jpg',
+    '/assets/image3.jpg',
+    '/assets/image4.jpg'
+  ];
 
   constructor(
     private productsService: ProductsService,
@@ -44,7 +52,14 @@ export class ProductsComponent implements OnInit {
   loadProducts(): void {
     this.productsService.getProducts().subscribe({
       next: (products) => {
-        this.data = products;
+        // Assign random images to products that don't have images
+        this.data = products.map(product => {
+          if (!product.image) {
+            const randomImage = this.productImages[Math.floor(Math.random() * this.productImages.length)];
+            return { ...product, image: randomImage };
+          }
+          return product;
+        });
         this.cdr.detectChanges();
       },
       error: (error) => {
@@ -97,5 +112,12 @@ export class ProductsComponent implements OnInit {
    */
   goToCart(): void {
     this.router.navigate(['/cart']);
+  }
+
+  /**
+   * Navigate to product details
+   */
+  viewProductDetails(product: Product): void {
+    this.router.navigate(['/products', product.productId]);
   }
 }
