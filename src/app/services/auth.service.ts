@@ -1,7 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { catchError, of, tap } from 'rxjs';
+import { catchError, of, switchMap, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -13,7 +13,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   loadUser() {
-    return this.http.get<any>(`${this.apiUrl}/me`, { withCredentials: true }).pipe(
+    return this.http.get<any>(`${this.apiUrl}/user`, { withCredentials: true }).pipe(
       tap(user => {
         this.isAuthenticatedSig.set(!!user);
       }),
@@ -34,12 +34,27 @@ export class AuthService {
     window.location.href = `${this.apiUrl}/login?returnUrl=${encodeURIComponent(bffReturnUrl)}`;
   }
 
-  logout() {
-    return this.http.post(`${this.apiUrl}/logout`, {}, { withCredentials: true }).pipe(
-      tap(() => {
-        this.isAuthenticatedSig.set(false);
-        this.router.navigate(['/products']);
-      })
-    );
-  }
+  private getCsrf() {
+  return this.http.get('https://localhost:7251/bff/csrf', {
+    responseType: 'text',
+    withCredentials: true
+  });
+}
+
+logout() {
+  return this.getCsrf().pipe(
+    switchMap(token => {
+      const headers = new HttpHeaders({ 'X-CSRF': token });
+      return this.http.post('https://localhost:7251/bff/logout', null, {
+        headers,
+        withCredentials: true,
+        responseType: 'text'
+      });
+    }),
+    tap(() => {
+      this.isAuthenticatedSig.set(false);
+      this.router.navigate(['/products']);
+    })
+  );
+}
 }
