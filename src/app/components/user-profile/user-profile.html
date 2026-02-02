@@ -5,6 +5,7 @@
   <p class="subtitle">Manage your personal information</p>
 
   <form [formGroup]="userForm" class="profile-form">
+    
     <div class="form-row">
       <mat-form-field appearance="outline">
         <mat-label>Name</mat-label>
@@ -20,7 +21,8 @@
 
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput type="email" formControlName="email" placeholder="Enter your email" required>
+        <input matInput type="email" formControlName="email"  readonly >
+
         <mat-icon matPrefix>email</mat-icon>
         <mat-error *ngIf="userForm.get('email')?.hasError('required')">
           Email is required
@@ -40,10 +42,20 @@
           Mobile is required
         </mat-error>
         <mat-error *ngIf="userForm.get('mobile')?.hasError('pattern')">
-          Please enter a valid mobile number (10 digits)
+          Please enter a valid mobile number (11 digits)
         </mat-error>
       </mat-form-field>
-
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <input matInput formControlName="address" placeholder="Enter your Address" required>
+        <mat-icon matPrefix>badge</mat-icon>
+        <mat-error *ngIf="userForm.get('nationalId')?.hasError('required')">
+         Address is required
+        </mat-error>
+        <mat-error *ngIf="userForm.get('address')?.hasError('minlength')">
+          Address must be at least 5 characters
+        </mat-error>
+      </mat-form-field>
       <mat-form-field appearance="outline">
         <mat-label>National ID</mat-label>
         <input matInput formControlName="nationalId" placeholder="Enter your national ID" required>
@@ -62,6 +74,9 @@
       <button mat-raised-button class="primary-btn" (click)="onSubmit()" [disabled]="!userForm.valid">
         Save Changes
       </button>
+      <!-- <button mat-raised-button class="primary-btn" (click)="onSubmit()" [disabled]="!userForm.valid">
+        Change Password
+      </button> -->
     </div>
   </form>
 </section>

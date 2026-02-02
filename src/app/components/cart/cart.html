@@ -9,6 +9,7 @@
 
     <mat-card-content>
       <!-- Empty Cart Message -->
+      <!-- condition -->
       <div *ngIf="!cart || cart.items.length === 0" class="empty-cart">
         <mat-icon class="empty-icon">shopping_cart</mat-icon>
         <h2>Your cart is empty</h2>
@@ -22,6 +23,7 @@
       <!-- Cart Items -->
       <div *ngIf="cart && cart.items.length > 0" class="cart-content">
         <div class="cart-items">
+          <!-- forloop for item -->
           <div *ngFor="let item of cart.items" class="cart-item">
             <div class="item-image">
               <img [src]="item.product.image || '/assets/placeholder-header.jpg'" [alt]="item.product.name" />

@@ -19,5 +19,9 @@ export class UserService {
   updateUserProfile(user: User): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/me`, user, { withCredentials: true });
   }
-
+  getBffUser(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/user`, {
+      withCredentials: true
+    });
+  }
 }

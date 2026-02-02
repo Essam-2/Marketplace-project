@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container" autosize>
   <mat-sidenav #drawer class="app-sidenav" mode="side" opened>
     <mat-toolbar class="sideTitle">MyMenu</mat-toolbar>
-
+<!-- fixed content -->
     <div class="sidenav-content">
       <mat-nav-list class="nav-items">
         <a mat-list-item routerLink="/products" routerLinkActive="active">
@@ -48,9 +48,11 @@
 
       <h1>Marketplace</h1>
       <span class="spacer"></span>
-
+ <!-- badge notifiacation  -->
+  <!-- badge hiddenwhen cartitem = 0 notifiacation  -->
       <button mat-icon-button [matMenuTriggerFor]="cartMenu" aria-label="shopping_cart">
         <mat-icon
+       
           [matBadge]="cartItemCount"
           [matBadgeHidden]="cartItemCount === 0"
           matBadgeColor="warn"
@@ -66,14 +68,14 @@
         </div>
         <mat-divider></mat-divider>
 
-        <div *ngIf="cartItems.length === 0" class="empty-cart" (click)="$event.stopPropagation()">
+        <div *ngIf="cartItems.length === 0" class="empty-cart" (click)="$event.stopPropagation()">  <!-- to stop icon  from stop -->
           <mat-icon class="empty-icon">shopping_cart</mat-icon>
           <p>Your cart is empty</p>
           <small>Add items to your cart to see them here</small>
         </div>
 
         <div *ngIf="cartItems.length > 0" class="cart-items">
-          <div *ngFor="let item of cartItems" class="cart-item" (click)="$event.stopPropagation()">
+          <div *ngFor="let item of cartItems" class="cart-item" (click)="$event.stopPropagation()"><!-- for loop -->
             <div class="item-info">
               <span class="item-name">{{ item.product.name }}</span>
               <span class="item-details">{{ item.quantity }} x ${{ item.product.price.toFixed(2) }}</span>
@@ -102,7 +104,7 @@
     </mat-toolbar>
 
     <main class="app-content">
-      <router-outlet></router-outlet>
+      <router-outlet></router-outlet> <!-- changable content -->
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>

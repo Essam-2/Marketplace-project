@@ -13,6 +13,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDividerModule } from '@angular/material/divider';
 import { CartItem } from './modals/cart.model';
+import { HttpErrorResponse } from '@angular/common/http';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -42,35 +44,58 @@ export class App implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   
   constructor(
-    public authService: AuthService,
+    public authService: AuthService,//inject for services
     private cartService: CartService,
-    private router: Router
+    private router: Router //form page to page 
   ) {}
 
   ngOnInit(): void {
-    // Subscribe to cart changes
-    this.cartService.cart$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((cart) => {
-        this.cartItems = cart.items;
-        this.cartItemCount = cart.totalItems;
-        this.cartTotal = cart.totalPrice;
-      });
-  }
+
+  this.authService.loadUser()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(user => {
+      if (!user) return;
+
+      this.authService.CustomerProfile()
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (res: any) => {
+            if (res?.reloginRequired) {
+              const returnUrl = '/spa/callback?to=/';
+
+              window.location.href =
+                `${environment.apiUrl}/login?returnUrl=${encodeURIComponent(returnUrl)}`;
+            }
+          },
+          error: (err: HttpErrorResponse) => {
+            if (err.status === 401) return;
+            console.error('Provision failed', err);
+          }
+        });
+    });
+
+  this.cartService.cart$
+    .pipe(takeUntil(this.destroy$))
+    .subscribe((cart) => {
+      this.cartItems = cart.items;
+      this.cartItemCount = cart.totalItems;
+      this.cartTotal = cart.totalPrice;
+    });
+}
+
 
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  login(): void {
+  login(): void {//call login fun in service
     this.authService.login();
   }
 
-  logout(): void {
-    this.authService.logout().subscribe();
-  }
-
+logout(): void {
+  this.authService.logout(); 
+}
   get isAuthenticated(): boolean {
     return this.authService.isAuthenticatedSig();
   }

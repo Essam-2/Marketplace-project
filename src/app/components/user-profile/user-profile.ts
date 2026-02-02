@@ -39,9 +39,10 @@ export class UserProfile implements OnInit {
   ) {
     this.userForm = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{10}$/)]],
+      email: [ '', [Validators.required, Validators.email]],
+      mobile: ['', [Validators.required, Validators.pattern(/^[0-9]{11}$/)]],
       nationalId: ['', [Validators.required, Validators.minLength(14)]],
+      address: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
 
@@ -58,6 +59,7 @@ export class UserProfile implements OnInit {
           email: user.email,
           mobile: user.mobile,
           nationalId: user.nationalId,
+          address: user.address,
         });
       },
       error: (error) => {

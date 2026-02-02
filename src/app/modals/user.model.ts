@@ -4,4 +4,5 @@ export interface User {
   email: string;
   mobile: string;
   nationalId: string;
+  address: string;
 }
