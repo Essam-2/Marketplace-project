@@ -1,0 +1,78 @@
+<section class="landing-page">
+  <!-- Hero Section -->
+  <div class="hero-section">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1 class="hero-title">Welcome to Our Marketplace</h1>
+        <p class="hero-subtitle">
+          Discover amazing products at great prices. Shop from the comfort of your home with fast delivery across Egypt.
+        </p>
+        <div class="hero-actions">
+          <button mat-raised-button class="primary-button" (click)="navigateToProducts()">
+            <mat-icon>shopping_cart</mat-icon>
+            Start Shopping
+          </button>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="floating-card">
+          <mat-icon class="large-icon">shopping_bag</mat-icon>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Features Section -->
+  <div class="features-section">
+    <div class="section-header">
+      <h2>Why Shop With Us?</h2>
+      <p>Experience the best online shopping with these amazing benefits</p>
+    </div>
+    
+    <div class="features-grid">
+      <mat-card *ngFor="let feature of features" class="feature-card">
+        <div class="feature-icon">
+          <mat-icon>{{ feature.icon }}</mat-icon>
+        </div>
+        <h3>{{ feature.title }}</h3>
+        <p>{{ feature.description }}</p>
+      </mat-card>
+    </div>
+  </div>
+
+  <!-- Call to Action Section -->
+  <div class="cta-section">
+    <div class="cta-content">
+      <h2>Ready to Start Shopping?</h2>
+      <p>Join thousands of satisfied customers and find your perfect products today!</p>
+      <button mat-raised-button class="cta-button" (click)="navigateToProducts()">
+        <mat-icon>store</mat-icon>
+        Browse Products
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats Section -->
+  <div class="stats-section">
+    <div class="stat-item">
+      <mat-icon>inventory_2</mat-icon>
+      <div class="stat-number">1000+</div>
+      <div class="stat-label">Products</div>
+    </div>
+    <div class="stat-item">
+      <mat-icon>people</mat-icon>
+      <div class="stat-number">5000+</div>
+      <div class="stat-label">Happy Customers</div>
+    </div>
+    <div class="stat-item">
+      <mat-icon>star</mat-icon>
+      <div class="stat-number">4.8</div>
+      <div class="stat-label">Average Rating</div>
+    </div>
+    <div class="stat-item">
+      <mat-icon>local_shipping</mat-icon>
+      <div class="stat-number">99%</div>
+      <div class="stat-label">On-Time Delivery</div>
+    </div>
+  </div>
+</section>
