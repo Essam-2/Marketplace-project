@@ -31,17 +31,16 @@
 		<ng-container matColumnDef="orderStatusText">
 			<th mat-header-cell *matHeaderCellDef> Status </th>
 			<td mat-cell *matCellDef="let element">
-				<span class="status-badge" [ngClass]="{
-				  'status-active': element.orderStatusText === 'Delivered' || element.orderStatusText === 'Shipped',
-				  'status-pending': element.orderStatusText === 'Pending' || element.orderStatusText === 'Confirmed',
-				  'status-inactive': false
-				}">{{ element.orderStatusText }}</span>
+				<span class="status-badge" [ngClass]="getStatusConfig(element.orderStatusText).class">
+					<mat-icon>{{ getStatusConfig(element.orderStatusText).icon }}</mat-icon>
+					{{ getStatusConfig(element.orderStatusText).label }}
+				</span>
 			</td>
 		</ng-container>
 
 		<!-- Actions Column -->
 		<ng-container matColumnDef="actions">
-			<th mat-header-cell *matHeaderCellDef> Actions </th>
+			<th mat-header-cell *matHeaderCellDef> View </th>
 			<td mat-cell *matCellDef="let element">
 				<button mat-icon-button color="primary" aria-label="Details" (click)="viewDetails(element.orderId)">
 					<mat-icon>visibility</mat-icon>

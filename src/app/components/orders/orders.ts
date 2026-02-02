@@ -54,6 +54,25 @@ export class OrdersComponent implements OnInit {
     });
   }
 
+  getStatusConfig(status: string): { icon: string; class: string; label: string } {
+    const statusLower = status?.toLowerCase() || '';
+    
+    if (statusLower === 'delivered') {
+      return { icon: 'check_circle', class: 'status-delivered', label: 'Delivered' };
+    } else if (statusLower === 'shipped' || statusLower === 'shipping') {
+      return { icon: 'local_shipping', class: 'status-shipped', label: 'Shipped' };
+    } else if (statusLower === 'confirmed') {
+      return { icon: 'assignment_turned_in', class: 'status-confirmed', label: 'Confirmed' };
+    } else if (statusLower === 'pending') {
+      return { icon: 'schedule', class: 'status-pending', label: 'Awaiting Confirmation' };
+    } else if (statusLower === 'cancelled' || statusLower === 'canceled') {
+      return { icon: 'cancel', class: 'status-cancelled', label: 'Cancelled' };
+    } else if (statusLower === 'processing') {
+      return { icon: 'sync', class: 'status-processing', label: 'Processing' };
+    }
+    return { icon: 'info', class: 'status-default', label: status };
+  }
+
   // addNewOrder(): void {
   //   const dialogRef = this.dialog.open(OrderFormDialogComponent, {
   //     width: '500px',
